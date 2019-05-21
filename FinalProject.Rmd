@@ -71,7 +71,7 @@ head(spotify_data)
 
 #Tidying the Dataset
 
-  It is important that before we analyze our data, it is presented in such a manner that it is responsive to analysis, in both modeling and visualization. To do this, we have structured our data according to the Entity-Relationship model. This is a data structure where each attribute forms a column, each entity forms a row, and each type of entity forms a table. Once our data is presented as such, we modified some of the entities to make it easier to analyze. First of all, we added a rank attribute, which numerically shows the song's rank on the chart. Then, we converted the duration of the song from milliseconds to a minutes and seconds format. Lastly, we got dropped all of the "NAs" in the data frame, as they wouldn't be useful to our analysis.
+It is important that before we analyze our data, it is presented in such a manner that it is responsive to analysis, in both modeling and visualization. To do this, we have structured our data according to the Entity-Relationship model. This is a data structure where each attribute forms a column, each entity forms a row, and each type of entity forms a table. Once our data is presented as such, we modified some of the entities to make it easier to analyze. First of all, we added a rank attribute, which numerically shows the song's rank on the chart. Then, we converted the duration of the song from milliseconds to a minutes and seconds format. Lastly, we got dropped all of the "NAs" in the data frame, as they wouldn't be useful to our analysis.
   
   
 ```{r}
@@ -115,7 +115,7 @@ Now, we want to see what aspects of a song make it popular. Why are the top song
 
 
 ```{r, warning=FALSE}
-spotify_data %>% ggplot(aes(x = tempo, y = rank)) + geom_line() + geom_smooth(method=lm)
+spotify_data %>% ggplot(aes(x = tempo, y = rank)) + geom_point() + geom_smooth(method=lm)
 ```
 
 
@@ -150,7 +150,7 @@ After noticing a slight increase in the trendline, we decided to perform a linea
 
 
 ```{r, warning=FALSE}
-spotify_data %>% ggplot(aes(x = liveness, y = rank)) + geom_line() + geom_smooth(method=lm)
+spotify_data %>% ggplot(aes(x = liveness, y = rank)) + geom_point() + geom_smooth(method=lm)
 ```
 
 
@@ -181,15 +181,27 @@ After getting an inconclusive p-value for the relationship between a song's temp
 
 
 ```{r, warning=FALSE}
-spotify_data %>% ggplot(aes(x = liveness, y = log(rank))) + geom_line() + geom_smooth(method=lm)
+spotify_data %>% ggplot(aes(x = liveness, y = log(rank))) + geom_point() + geom_smooth(method=lm)
 ```
 
+
+However, to make sure this is a good model, we also need to look at the residual plot to make sure that the residuals are evenly distributed around 0 and that there are no trends within them. 
+
+
+```{r, warning=FALSE}
+spotify_data %>%
+  ggplot(aes(x=liveness, y=residuals(log_regression_rank))) + geom_point()
+  labs(title="Residuals with respect to liveness", x = "liveness", y = "residual")
+```
+
+
+Because there are an even number of points above and below 0 as well as no real patter between the residuals as liveness increases, this model is a good fit. 
 
 ## Is there a relationship between danceability and valence?
 
 
 ```{r, warning=FALSE}
-spotify_data %>% ggplot(aes(x = danceability, y = valence)) + geom_line() + geom_smooth(method=lm)
+spotify_data %>% ggplot(aes(x = danceability, y = valence)) + geom_point() + geom_smooth(method=lm)
 ```
 
 
@@ -220,8 +232,26 @@ With this project, we wanted to not only look for relationships between differen
 
 
 ```{r, warning=FALSE}
-spotify_data %>% ggplot(aes(x = log(danceability), y = log(valence))) + geom_line() + geom_smooth(method=lm)
+spotify_data %>% ggplot(aes(x = log(danceability), y = log(valence))) + geom_point() + geom_smooth(method=lm)
 ```
+
+
+However, to make sure this is a good model, we also need to look at the residual plot to make sure that the residuals are evenly distributed around 0 and that there are no trends within them. 
+
+
+```{r, warning=FALSE}
+spotify_data %>%
+  ggplot(aes(x=log(danceability), y=residuals(log_regression_both))) + geom_point()
+  labs(title="Residuals with respect to log(danceability)", x = "log(danceability", y = "residual")
+```
+
+
+Because there is no pattern amongst the residuals and they are all centered around 0, this relationship is accurate. 
+
+
+For more information about linear regressions and residual plots, check out more information from the statistics department at Yale [here](http://www.stat.yale.edu/Courses/1997-98/101/linreg.htm). 
+
+While we did the regression and residuals plots with R in this tutorial, the same analysis can be done with other programming languages. To learn how to do this same analysis with Python, check out [this Towards Data Science tutorial](https://towardsdatascience.com/linear-regression-using-python-ce21aa90ade6). 
 
 
 #Conclusion 
