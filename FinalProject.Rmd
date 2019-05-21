@@ -1,8 +1,10 @@
 ---
-title: "Final Project: Top Spotify Tracks of 2018 Analysis"
+title: 'Final Project: Top Spotify Tracks of 2018 Analysis'
 author: "Jacqueline Deprey and Julie Stone"
 date: "March 10, 2019"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, message=FALSE, warning=FALSE}
@@ -258,6 +260,6 @@ While we did the regression and residuals plots with R in this tutorial, the sam
 
 In conclusion, while there was not a statistically significant linear relationship between most of the variables and the rank of a song, it can be concluded that the liveness of a song negatively impacts its performance on Spotify. Although we were not able to detect many statistically significant linear relationships, because of how profitable the music industry is, we suggest that artists do more analysis to increase the number of listeners to their music. One way to improve upon our analysis would be to look into other types of relationships between variables and to use a larger dataset. Because our trendlines looked relatively linear to begin with, we to only go forward with linear and log based relationships. Other models though like Poisson's may find that a statistically significant relationship does exist between some of our inconclusive variables. However, if a larger dataset was used than just the top 100 songs, it might be easier to detect if other relationships exist. In addition, because of the larger sample size, it would be easier to prove that relationships found are statistically significant because a larger sample size would decrease the standard error.  
 
-For this project, Jacqueline worked on the introduction and industry analysis. Julie researched what each of the industry terms meant to understand what each of the attributes represented. Jacqueline then tidied the data which Julie then analyzed. Both Jacqueline and Julie analyzed the results of their findings and worked to make meaningful conclusions from the results. Jacqueline then uploaded the project to Github to be submitted for the team.
+For this project, Jacqueline worked on the introduction and industry analysis. Julie researched what each of the industry terms meant to understand what each of the attributes represented. Jacqueline then tidied the data which Julie then did a regression analysis for. Jacqueline did the residual analysis and both Jacqueline and Julie analyzed the results of their findings and worked to make meaningful conclusions from the results. Jacqueline then uploaded the project to Github to be submitted for the team.
 
 
